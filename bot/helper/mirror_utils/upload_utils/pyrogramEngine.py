@@ -258,19 +258,12 @@ class TgUploader:
                 else:
                     notMedia = True
             if self.__as_doc or notMedia:
-                if is_video and thumb is None:
-                    thumb = take_ss(up_path, None)
-                    if self.__is_cancelled:
-                        if self.__thumb is None and thumb is not None and ospath.lexists(thumb):
-                            osremove(thumb)
-                        return
                 if len(LEECH_LOG) != 0:
                     for leechchat in self.__leech_log:
                         if ospath.getsize(up_path) > tgBotMaxFileSize: usingclient = premium_session
                         else: usingclient = self.__app
                         self.__sent_msg = usingclient.send_document(chat_id=leechchat,
                                                                 document=up_path,
-                                                                thumb=thumb,
                                                                 caption=cap_mono + cap,
                                                                 disable_notification=True,
                                                                 progress=self.__upload_progress)
@@ -287,7 +280,6 @@ class TgUploader:
                 else:
                     self.__sent_msg = self.__sent_msg.reply_document(document=up_path,
                                                                      quote=True,
-                                                                     thumb=thumb,
                                                                      caption=cap_mono + cap,
                                                                      disable_notification=True,
                                                                      progress=self.__upload_progress)
